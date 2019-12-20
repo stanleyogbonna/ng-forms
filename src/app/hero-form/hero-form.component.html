@@ -7,12 +7,27 @@
         type="text"
         class="form-control"
         id="name"
-        required
-        [(ngModel)]="model.name"
         name="name"
+        required
+        minlength="4"
+        appForbiddenName="coward"
+        [(ngModel)]="model.name"
         #name="ngModel">
-      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+      <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
         Name is required
+      </div> -->
+
+      <div *ngIf="name.invalid && (name.dirty || name.touched)"
+        class="alert alert-danger">
+        <div *ngIf=name.errors.required>
+          Name is required
+        </div>
+        <div *ngIf="name.errors.minlength">
+          Name must be at least 4 characters long.
+        </div>
+        <div *ngIf="name.errors.forbiddenName">
+          Name cannot be coward
+        </div>
       </div>
       TODO: remove this: {{model.name}}
     </div>
